@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Form from './Form';
+import Item from './Item';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [todos, setTodos] = useState([
+        {title: "Eat", isCompleted: true},
+        {title: "Code", isCompleted: false},
+        {title: "Sleep", isCompleted: false},
+    ]);
+
+    const addTodo = title => {
+        const newTodos = [...todos, {title}];
+        setTodos(newTodos);
+    }
+
+    const completeTodo = index => {
+        const newTodos = [...todos];
+        newTodos[index].isCompleted = true;
+        setTodos(newTodos);
+    }
+
+    const removeTodo = index => {
+        const newTodos = [...todos];
+        newTodos.splice(index, 1);
+        setTodos(newTodos);
+    }
+
+    return (
+        <div className="app">
+            <div className="container bg-light">
+                <Form todos={addTodo} completeTodo={completeTodo}/>
+                <ul className="list-group">
+                    {
+                    todos.map((todo, index) => (
+                        <Item 
+                        key={index}
+                        index={index}
+                        title={todo.title} 
+                        completeTodo={completeTodo}
+                        removeTodo={removeTodo}
+                        />
+                    )) 
+                    }
+                </ul>
+            </div>
+        </div>
+    )
 }
 
 export default App;
