@@ -35,7 +35,7 @@ function App() {
                 <ul className="list-group">
                     {
                     todos.map((todo, index) => (
-                        <Item 
+                      <Item 
                         key={index}
                         index={index}
                         title={todo.title} 
